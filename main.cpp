@@ -2,12 +2,17 @@
 #include <math.h>
 using namespace std;
 
+// Defininf Map Characteristics
 double Zmax = 5000, Zmin = 170;
 double l0 = 0, locc = 0.4, lfree = -0.4;
+double gridWidth = 100, gridHeight = 100;
+double mapWidth = 30000, mapHeight = 15000;
+double robotXOffset = mapWidth / 5, robotYOffset = mapHeight / 3;
+double l[30000/100][15000/100];//[mapWidth/gridWidth][mapHeight/gridHeight]
 
 double inverseSensorModel(double x, double y, double theta, double xi, double yi, double sensorData[])
 {
-    // Sensor Characteristics
+    // Defining Sensor Characteristics
     double Zk, thetaK, sensorTheta;
     double minDelta = -1;
     double alpha = 200, beta = 20;
@@ -53,25 +58,14 @@ double inverseSensorModel(double x, double y, double theta, double xi, double yi
     }
 }
 
-void occupancyGridMapping(double Robotx, double Roboty, double Robottheta, double sensorData[], int frame)
+void occupancyGridMapping(double Robotx, double Roboty, double Robottheta, double sensorData[])
 {
-    // Map Characteristics
-    double gridWidth = 100, gridHeight = 100;
-    double mapWidth = 30000, mapHeight = 15000;
-    double robotXOffset = mapWidth / 5, robotYOffset = mapHeight / 3;
-    double l[int(mapWidth / gridWidth)][int(mapHeight / gridHeight)];
-
-    //******************Code the Occupancy Grid Mapping Algorithm**********************//
     for (int x = 0; x < mapWidth / gridWidth; x++) {
         for (int y = 0; y < mapHeight / gridHeight; y++) {
             double xi = x * gridWidth + gridWidth / 2 - robotXOffset;
             double yi = -(y * gridHeight + gridHeight / 2) + robotYOffset;
             if (sqrt(pow(xi - Robotx, 2) + pow(yi - Roboty, 2)) <= Zmax) {
                 l[x][y] = l[x][y] + inverseSensorModel(Robotx, Roboty, Robottheta, xi, yi, sensorData) - l0;
-            }
-
-            if (frame == 413) {
-                cout << l[x][y] << " ";
             }
         }
     }
@@ -82,7 +76,6 @@ int main()
     double timeStamp;
     double measurementData[8];
     double robotX, robotY, robotTheta;
-    int robotMoves = 1;
 
     FILE* posesFile = fopen("poses.txt", "r");
     FILE* measurementFile = fopen("measurement.txt", "r");
@@ -93,10 +86,15 @@ int main()
         for (int i = 0; i < 8; i++) {
             fscanf(measurementFile, "%lf", &measurementData[i]);
         }
-        occupancyGridMapping(robotX, robotY, (robotTheta / 10) * (M_PI / 180), measurementData, robotMoves);
-
-        robotMoves++;
+        occupancyGridMapping(robotX, robotY, (robotTheta / 10) * (M_PI / 180), measurementData);
     }
-
+    
+    // Displaying the map at the final timestamp
+    for (int x = 0; x < mapWidth / gridWidth; x++) {
+        for (int y = 0; y < mapHeight / gridHeight; y++) {
+            cout << l[x][y] << " ";
+        }
+    }
+    
     return 0;
 }
