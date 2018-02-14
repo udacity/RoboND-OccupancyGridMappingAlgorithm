@@ -2,7 +2,7 @@
 #include <math.h>
 using namespace std;
 
-// Defininf Map Characteristics
+// Defining Map Characteristics
 double Zmax = 5000, Zmin = 170;
 double l0 = 0, locc = 0.4, lfree = -0.4;
 double gridWidth = 100, gridHeight = 100;
