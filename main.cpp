@@ -88,13 +88,13 @@ void visualization()
     for (double x = 0; x < mapWidth / gridWidth; x++) {
         for (double y = 0; y < mapHeight / gridHeight; y++) {
             if (l[x][y] == 0) { //Green unkown state
-                plt::plot({ x }, { y }, "go");
+                plt::plot({ x }, { y }, "g.");
             }
-            else if (l[x][y] > 0) { //Blue occupied
-                plt::plot({ x }, { y }, "bo");
+            else if (l[x][y] > 0) { //Black occupied state
+                plt::plot({ x }, { y }, "k.");
             }
-            else { //Red free
-                plt::plot({ x }, { y }, "ro");
+            else { //zred free state
+                plt::plot({ x }, { y },"r.");
             }
         }
     }
