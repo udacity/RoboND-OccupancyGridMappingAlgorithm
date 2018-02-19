@@ -1,2 +1,2 @@
 # RoboND-OccupancyGridMappingAlgorithm
-![alt text](Images/map.png)
+![alt text](Images/Map.png)
