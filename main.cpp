@@ -1,6 +1,11 @@
+//Compile with: g++ main.cpp -o app -std=c++11 -I/usr/include/python2.7 -lpython2.7
 #include <iostream>
 #include <math.h>
+#include <vector>
+#include "src/matplotlibcpp.h" //Graph Library
+
 using namespace std;
+namespace plt = matplotlibcpp;
 
 // Defining Map Characteristics
 double Zmax = 5000, Zmin = 170;
@@ -8,7 +13,7 @@ double l0 = 0, locc = 0.4, lfree = -0.4;
 double gridWidth = 100, gridHeight = 100;
 double mapWidth = 30000, mapHeight = 15000;
 double robotXOffset = mapWidth / 5, robotYOffset = mapHeight / 3;
-double l[30000/100][15000/100];//[mapWidth/gridWidth][mapHeight/gridHeight]
+vector<vector<double> > l(mapWidth / gridWidth, vector<double>(mapHeight / gridHeight));
 
 double inverseSensorModel(double x, double y, double theta, double xi, double yi, double sensorData[])
 {
@@ -60,6 +65,7 @@ double inverseSensorModel(double x, double y, double theta, double xi, double yi
 
 void occupancyGridMapping(double Robotx, double Roboty, double Robottheta, double sensorData[])
 {
+    //******************Code the Occupancy Grid Mapping Algorithm**********************//
     for (int x = 0; x < mapWidth / gridWidth; x++) {
         for (int y = 0; y < mapHeight / gridHeight; y++) {
             double xi = x * gridWidth + gridWidth / 2 - robotXOffset;
@@ -69,6 +75,33 @@ void occupancyGridMapping(double Robotx, double Roboty, double Robottheta, doubl
             }
         }
     }
+}
+
+void visualization()
+{
+    //Graph Format
+    plt::title("Map");
+    plt::xlim(0, (int)(mapWidth / gridWidth));
+    plt::ylim(0, (int)(mapHeight / gridHeight));
+
+    // Draw every grid of the map:
+    for (double x = 0; x < mapWidth / gridWidth; x++) {
+        for (double y = 0; y < mapHeight / gridHeight; y++) {
+            if (l[x][y] == 0) { //Green unkown state
+                plt::plot({ x }, { y }, "go");
+            }
+            else if (l[x][y] > 0) { //Blue occupied
+                plt::plot({ x }, { y }, "bo");
+            }
+            else { //Red free
+                plt::plot({ x }, { y }, "ro");
+            }
+        }
+    }
+
+    //Save the image and close the plot
+    plt::save("./Images/Map.png");
+    plt::clf();
 }
 
 int main()
@@ -88,13 +121,12 @@ int main()
         }
         occupancyGridMapping(robotX, robotY, (robotTheta / 10) * (M_PI / 180), measurementData);
     }
-    
-    // Displaying the map at the final timestamp
-    for (int x = 0; x < mapWidth / gridWidth; x++) {
-        for (int y = 0; y < mapHeight / gridHeight; y++) {
-            cout << l[x][y] << " ";
-        }
-    }
-    
+
+    // Visualize the map at the final step
+    cout << "Wait for the image to generate" << endl;
+    visualization();
+    cout << "Done!" << endl;
+
     return 0;
 }
+
