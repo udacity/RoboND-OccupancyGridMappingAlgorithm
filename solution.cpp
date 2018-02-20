@@ -78,12 +78,30 @@ void occupancyGridMapping(double Robotx, double Roboty, double Robottheta, doubl
 
 void visualization()
 {
-    //Initialize a plot named Map of size 300x150
-    
-    //Loop over the log odds values of the cells and plot each cell state. 
-    //Unkown state: green color, occupied state: black color, and free state: red color 
-    
-    //Save the image and close the plot 
+    //Graph Format
+    plt::title("Map");
+    plt::xlim(0, (int)(mapWidth / gridWidth));
+    plt::ylim(0, (int)(mapHeight / gridHeight));
+
+    // Draw every grid of the map:
+    for (double x = 0; x < mapWidth / gridWidth; x++) {
+        cout << "Remaining Rows= " << mapWidth / gridWidth - x << endl;
+        for (double y = 0; y < mapHeight / gridHeight; y++) {
+            if (l[x][y] == 0) { //Green unkown state
+                plt::plot({ x }, { y }, "g.");
+            }
+            else if (l[x][y] > 0) { //Black occupied state
+                plt::plot({ x }, { y }, "k.");
+            }
+            else { //Red free state
+                plt::plot({ x }, { y }, "r.");
+            }
+        }
+    }
+
+    //Save the image and close the plot
+    plt::save("./Images/Map.png");
+    plt::clf();
 }
 
 int main()
