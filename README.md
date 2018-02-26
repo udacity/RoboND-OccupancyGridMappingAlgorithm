@@ -16,6 +16,14 @@ void visualization()
     //Save the image and close the plot 
 }
 ```
+Here are some helpful commands you can use to generate plots with the `matplotlib` library:
+* *Set Title*: `plt::title("Your Title");`
+* *Set Limits*: `plt::xlim(x-axis lower limit, x-axis upper limit );`
+* *Plot Data*:`plt::plot({ x-value }, { y-value }, "Color and Shape");`
+* *Save Plot*: `plt::save("File name and directory")`;
+* *Close Plot*:   `plt::clf()`;
+
+Check out this [link](https://github.com/lava/matplotlib-cpp) for more information on the `matplotlib` C++ library. For information regarding the plot color and shape refer to the LineSpec and LineColor section of the [MATLAB](https://www.mathworks.com/help/matlab/ref/plot.html?requestedDomain=true) documentation. 
 
 ### Compiling:
 ```sh
