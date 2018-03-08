@@ -6,13 +6,18 @@
 using namespace std;
 namespace plt = matplotlibcpp;
 
-// Defining Map Characteristics
+// Sensor characteristic: Min and Max ranges of the beams
 double Zmax = 5000, Zmin = 170;
+// Defining free cells(lfree), occupied cells(locc), unknown cells(l0) log odds values
 double l0 = 0, locc = 0.4, lfree = -0.4;
+// Grid dimensions
 double gridWidth = 100, gridHeight = 100;
+// Map dimensions
 double mapWidth = 30000, mapHeight = 15000;
+// Robot size with respect to the map 
 double robotXOffset = mapWidth / 5, robotYOffset = mapHeight / 3;
-vector<vector<double> > l(mapWidth / gridWidth, vector<double>(mapHeight / gridHeight));
+// Defining an l vector to store the log odds values of each cell
+vector< vector<double> > l(mapWidth/gridWidth, vector<double>(mapHeight/gridHeight));
 
 double inverseSensorModel(double x, double y, double theta, double xi, double yi, double sensorData[])
 {
