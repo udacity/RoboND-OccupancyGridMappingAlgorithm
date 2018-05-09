@@ -27,6 +27,8 @@ Check out this [link](https://github.com/lava/matplotlib-cpp) for more informati
 
 ### Compiling:
 ```sh
+$ cd /home/workspace/
+$ git clone https://github.com/udacity/RoboND-OccupancyGridMappingAlgorithm/
 $ cd RoboND-OccupancyGridMappingAlgorithm/
 $ rm -rf Images/*
 $ g++ main.cpp -o app -std=c++11 -I/usr/include/python2.7 -lpython2.7
