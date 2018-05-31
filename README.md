@@ -3,7 +3,7 @@
 # RoboND-OccupancyGridMappingAlgorithm
 You will visualize the mapped environment through the generated image
 
-### Instruction:
+### Instruction
 Code the visualization function which will plot the state of each grid cell using the matplotlib python library
 ``` C++
 void visualization()
@@ -25,7 +25,7 @@ Here are some helpful commands you can use to generate plots with the `matplotli
 
 Check out this [link](https://github.com/lava/matplotlib-cpp) for more information on the `matplotlib` C++ library. For information regarding the plot color and shape refer to the LineSpec and LineColor section of the [MATLAB](https://www.mathworks.com/help/matlab/ref/plot.html?requestedDomain=true) documentation. 
 
-### Compiling:
+### Compiling
 ```sh
 $ cd /home/workspace/
 $ git clone https://github.com/udacity/RoboND-OccupancyGridMappingAlgorithm
@@ -34,14 +34,14 @@ $ rm -rf Images/*
 $ g++ main.cpp -o app -std=c++11 -I/usr/include/python2.7 -lpython2.7
 ```
 
-### Running:
+### Running
 ```sh
 $ ./app
 ```
 
 Now, wait for the program to generate the map!
 
-### Generated Map:
+### Generated Map
 
 ![alt text](Images/Map.png)
 
