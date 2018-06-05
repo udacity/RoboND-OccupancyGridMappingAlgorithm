@@ -78,12 +78,12 @@ void occupancyGridMapping(double Robotx, double Roboty, double Robottheta, doubl
 
 void visualization()
 {
-    //Initialize a plot named Map of size 300x150
+    //TODO: Initialize a plot named Map of size 300x150
     
-    //Loop over the log odds values of the cells and plot each cell state. 
+    //TODO: Loop over the log odds values of the cells and plot each cell state. 
     //Unkown state: green color, occupied state: black color, and free state: red color 
     
-    //Save the image and close the plot 
+    //TODO: Save the image and close the plot 
 }
 
 int main()
