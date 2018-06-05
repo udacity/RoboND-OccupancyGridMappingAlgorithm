@@ -8,12 +8,12 @@ Code the visualization function which will plot the state of each grid cell usin
 ``` C++
 void visualization()
 {
-    //Initialize a plot named Map of size 300x150
+    //TODO: Initialize a plot named Map of size 300x150
     
-    //Loop over the log odds values of the cells and plot each cell state. 
+    //TODO: Loop over the log odds values of the cells and plot each cell state. 
     //Unkown state: green color, occupied state: black color, and free state: red color 
     
-    //Save the image and close the plot 
+    //TODO: Save the image and close the plot 
 }
 ```
 Here are some helpful commands you can use to generate plots with the `matplotlib` library:
