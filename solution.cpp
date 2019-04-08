@@ -131,7 +131,7 @@ int main()
     cout << "Wait for the image to generate" << endl;
     visualization();
     cout << "Done!" << endl;
-
+    printf("hi");
     return 0;
 }
 
