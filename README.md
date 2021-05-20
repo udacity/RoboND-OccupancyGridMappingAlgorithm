@@ -16,27 +16,34 @@ void visualization()
     //TODO: Save the image and close the plot 
 }
 ```
-Here are some helpful commands you can use to generate plots with the `matplotlib` library:
-* *Set Title*: `plt::title("Your Title");`
-* *Set Limits*: `plt::xlim(x-axis lower limit, x-axis upper limit );`
-* *Plot Data*:`plt::plot({ x-value }, { y-value }, "Color and Shape");`
-* *Save Plot*: `plt::save("File name and directory")`;
-* *Close Plot*:   `plt::clf()`;
+Here are some helpful commands you can use to generate plots with the `matplotplusplus` library:
+* *Set Title*: `std::string title("Map");`
+               `auto h = matplot::figure(true);`
+               `h->title(title);`
+* *Set Limits*: `matplot::axis({xmin, xmax, ymin, ymax });`
+* *Plot Data*:`matplot::plot({ x-value }, { y-value }, "Color and Shape");`
+* *hold data*:` matplot::hold(matplot::on);;`
+* *Save Plot*: `plt::save("File name and directory")`
+* *show grid *: `matplot::grid(matplot::on);`
+               `matplot::gca()->minor_grid(true);`
+               `matplot::hold(matplot::off);`
+* *save Plot*:   `matplot:: save("../Images/Map.jpg");`;
 
-Check out this [link](https://github.com/lava/matplotlib-cpp) for more information on the `matplotlib` C++ library. For information regarding the plot color and shape refer to the LineSpec and LineColor section of the [MATLAB](https://www.mathworks.com/help/matlab/ref/plot.html?requestedDomain=true) documentation. 
+Check out this [link](https://github.com/alandefreitas/matplotplusplus) for more information on the `matplotlib` C++ library. For information regarding the plot color and shape refer to the LineSpec and LineColor section of the [MATLAB](https://www.mathworks.com/help/matlab/ref/plot.html?requestedDomain=true) documentation. 
 
 ### Compiling
 ```sh
-$ cd /home/workspace/
-$ git clone https://github.com/udacity/RoboND-OccupancyGridMappingAlgorithm
-$ cd RoboND-OccupancyGridMappingAlgorithm/
-$ rm -rf Images/* #Delete the folder content and not the folder itself!
-$ g++ main.cpp -o app -std=c++11 -I/usr/include/python2.7 -lpython2.7
+## Basic Build Instructions
+
+1. Clone this repo.
+2. Make a build directory: `mkdir Debug && cd Debug`
+3. Then source the workspace: `source devel/setup.bash`
+4. Compile: `cmake .. && make` --> (Linuex OS) or `cmake .. -G "MinGW Makefiles" & mingw32-make` (windows)
 ```
 
 ### Running
 ```sh
-$ ./app
+$ ./robotND
 ```
 
 Now, wait for the program to generate the map!
