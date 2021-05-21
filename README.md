@@ -37,8 +37,7 @@ Check out this [link](https://github.com/alandefreitas/matplotplusplus) for more
 
 1. Clone this repo.
 2. Make a build directory: `mkdir Debug && cd Debug`
-3. Then source the workspace: `source devel/setup.bash`
-4. Compile: `cmake .. && make` --> (Linuex OS) or `cmake .. -G "MinGW Makefiles" & mingw32-make` (windows)
+3. Compile: `cmake .. && make` --> (Linuex OS) or `cmake .. -G "MinGW Makefiles" & mingw32-make` (windows)
 ```
 
 ### Running
