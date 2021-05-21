@@ -2,7 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
-#include <matplot/matplot.h>
+#include "tools.h"
 
 
 // Sensor characteristic: Min and Max ranges of the beams
@@ -103,74 +103,77 @@ void occupancyGridMapping(double Robotx, double Roboty, double Robottheta, doubl
 
 void visualization()
 {
-    //Figure cfg
-    std::string title("Map");
-    auto h = matplot::figure(true);
-    h->title(title);
-    matplot::axis({0, (mapWidth / gridWidth), 0, (mapHeight / gridHeight) });
+    // //Figure cfg
+    // std::string title("Map");
+    // auto h = matplot::figure(true);
+    // h->title(title);
+    // matplot::axis({0, (mapWidth / gridWidth), 0, (mapHeight / gridHeight) });
 
-    // Draw every grid of the map:
-    for (double x = 0; x < mapWidth / gridWidth; x++) 
-    {
-        std::cout<<"Remaining Rows= " << mapWidth / gridWidth - x << std::endl;
-        matplot::hold(matplot::on);
-        for (double y = 0; y < mapHeight / gridHeight; y++) 
-        {
-            //Green unkown state
-            if (l[x][y] == 0) 
-            { 
-                matplot::plot({ x }, { y }, "g.");
-            }
-            //Black occupied state
-            else if (l[x][y] > 0) 
-            { 
-                matplot::plot({ x }, { y }, "k.");
-            }
-            //Red free state
-            else 
-            { 
-                matplot::plot({ x }, { y }, "r.");
-            }
-        }
-    }
+    // // Draw every grid of the map:
+    // for (double x = 0; x < mapWidth / gridWidth; x++) 
+    // {
+    //     std::cout<<"Remaining Rows= " << mapWidth / gridWidth - x << std::endl;
+    //     matplot::hold(matplot::on);
+    //     for (double y = 0; y < mapHeight / gridHeight; y++) 
+    //     {
+    //         //Green unkown state
+    //         if (l[x][y] == 0) 
+    //         { 
+    //             matplot::plot({ x }, { y }, "g.");
+    //         }
+    //         //Black occupied state
+    //         else if (l[x][y] > 0) 
+    //         { 
+    //             matplot::plot({ x }, { y }, "k.");
+    //         }
+    //         //Red free state
+    //         else 
+    //         { 
+    //             matplot::plot({ x }, { y }, "r.");
+    //         }
+    //     }
+    // }
+
+    // // //Save the image and close the plot
+    // // plt::save("./Images/Map.png");
+    // // plt::clf();
+
+    // matplot::grid(matplot::on);
+    // matplot::gca()->minor_grid(true);
+    // matplot::hold(matplot::off);
 
     // //Save the image and close the plot
-    // plt::save("./Images/Map.png");
-    // plt::clf();
-
-    matplot::grid(matplot::on);
-    matplot::gca()->minor_grid(true);
-    matplot::hold(matplot::off);
-
-    //Save the image and close the plot
-    matplot:: save("../Images/Map.jpg");
+    // matplot:: save("../Images/Map.jpg");
 }
 
 int main()
 {
-    double timeStamp;
-    double measurementData[8];
-    double robotX, robotY, robotTheta;
+    Tools tools; 
 
-    FILE* posesFile = fopen("Data/poses.txt", "r");
-    FILE* measurementFile = fopen("Data/measurement.txt", "r");
+    const std::string poses("../Data/poses.txt");
+    const std::string measurements("../Data/measurement.txt");
+    std::vector<MeasurementData_S> outputData;
 
-    // Scanning the files and retrieving measurement and poses at each timestamp
-    while (fscanf(posesFile, "%lf %lf %lf %lf", &timeStamp, &robotX, &robotY, &robotTheta) != EOF) 
+    tools.readMeasurements(measurements, poses, outputData);
+    const int size(outputData.size());
+
+    for(int i=0; i< size; i++)
     {
-        fscanf(measurementFile, "%lf", &timeStamp);
-        for (int i = 0; i < 8; i++) {
-            fscanf(measurementFile, "%lf", &measurementData[i]);
-        }
-        occupancyGridMapping(robotX, robotY, (robotTheta / 10) * (M_PI / 180), measurementData);
+        double robotX(outputData[i].robotX);
+        double robotY(outputData[i].robotY);
+        double robotTheta((outputData[i].robotTheta)/10 *(M_PI / 180));
+        occupancyGridMapping(robotX, robotY, robotTheta, outputData[i].measurementData);
     }
 
     // Displaying the map
-    for (int x = 0; x < mapWidth / gridWidth; x++) {
-        for (int y = 0; y < mapHeight / gridHeight; y++) {
+    for (int x = 0; x < mapWidth / gridWidth; x++) 
+    {
+        for (int y = 0; y < mapHeight / gridHeight; y++) 
+        {
             std::cout << l[x][y] << " ";
         }
     }
+    
     // Visualize the map at the final step
     std::cout << "Wait for the image to generate" << std::endl;
     visualization();
