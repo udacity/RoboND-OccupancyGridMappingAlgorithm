@@ -3,6 +3,7 @@
 #include <math.h>
 #include <vector>
 #include "tools.h"
+#include <matplot/matplot.h>
 
 
 // Sensor characteristic: Min and Max ranges of the beams
@@ -103,47 +104,41 @@ void occupancyGridMapping(double Robotx, double Roboty, double Robottheta, doubl
 
 void visualization()
 {
-    // //Figure cfg
-    // std::string title("Map");
-    // auto h = matplot::figure(true);
-    // h->title(title);
-    // matplot::axis({0, (mapWidth / gridWidth), 0, (mapHeight / gridHeight) });
+    //Figure cfg
+    std::string title("Map");
+    auto h = matplot::figure(true);
+    h->title(title);
+    matplot::axis({0, (mapWidth / gridWidth), 0, (mapHeight / gridHeight) });
 
-    // // Draw every grid of the map:
-    // for (double x = 0; x < mapWidth / gridWidth; x++) 
-    // {
-    //     std::cout<<"Remaining Rows= " << mapWidth / gridWidth - x << std::endl;
-    //     matplot::hold(matplot::on);
-    //     for (double y = 0; y < mapHeight / gridHeight; y++) 
-    //     {
-    //         //Green unkown state
-    //         if (l[x][y] == 0) 
-    //         { 
-    //             matplot::plot({ x }, { y }, "g.");
-    //         }
-    //         //Black occupied state
-    //         else if (l[x][y] > 0) 
-    //         { 
-    //             matplot::plot({ x }, { y }, "k.");
-    //         }
-    //         //Red free state
-    //         else 
-    //         { 
-    //             matplot::plot({ x }, { y }, "r.");
-    //         }
-    //     }
-    // }
+    // Draw every grid of the map:
+    for (double x = 0; x < mapWidth / gridWidth; x++) 
+    {
+        matplot::hold(matplot::on);
+        for (double y = 0; y < mapHeight / gridHeight; y++) 
+        {
+            //Green unkown state
+            if (l[x][y] == 0) 
+            { 
+                matplot::plot({ x }, { y }, "g.");
+            }
+            //Black occupied state
+            else if (l[x][y] > 0) 
+            { 
+                matplot::plot({ x }, { y }, "k.");
+            }
+            //Red free state
+            else 
+            { 
+                matplot::plot({ x }, { y }, "r.");
+            }
+        }
+    }
 
-    // // //Save the image and close the plot
-    // // plt::save("./Images/Map.png");
-    // // plt::clf();
+    matplot::grid(matplot::on);
+    matplot::hold(matplot::off);
 
-    // matplot::grid(matplot::on);
-    // matplot::gca()->minor_grid(true);
-    // matplot::hold(matplot::off);
-
-    // //Save the image and close the plot
-    // matplot:: save("../Images/Map.jpg");
+    //Save the image and close the plot
+    matplot:: save("../Images/Map.jpg");
 }
 
 int main()
@@ -163,15 +158,6 @@ int main()
         double robotY(outputData[i].robotY);
         double robotTheta((outputData[i].robotTheta)/10 *(M_PI / 180));
         occupancyGridMapping(robotX, robotY, robotTheta, outputData[i].measurementData);
-    }
-
-    // Displaying the map
-    for (int x = 0; x < mapWidth / gridWidth; x++) 
-    {
-        for (int y = 0; y < mapHeight / gridHeight; y++) 
-        {
-            std::cout << l[x][y] << " ";
-        }
     }
     
     // Visualize the map at the final step

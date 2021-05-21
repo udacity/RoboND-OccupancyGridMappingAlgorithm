@@ -4,7 +4,7 @@ project(robotND)
 message("GridApp")
 
 #find Matplot package
-# find_package(Matplot++ REQUIRED)
+find_package(Matplot++ REQUIRED)
 
 #for windows its required to prvode the include folder
 if(WIN32)
@@ -15,5 +15,4 @@ endif()
 
 #compile the source code and link it with external libraries
 add_executable(${PROJECT_NAME} src/main.cpp src/tools.cpp)
-# target_link_libraries(${PROJECT_NAME} PUBLIC Matplot++::matplot)
-     
+target_link_libraries(${PROJECT_NAME} PUBLIC Matplot++::matplot)
